@@ -11,10 +11,6 @@ import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import { async } from 'regenerator-runtime';
 
-// if (module.hot) {
-//   module.hot.accept();
-// }
-
 const controllRecipes = async function () {
   try {
     const id = window.location.hash.slice(1);
@@ -36,7 +32,6 @@ const controllRecipes = async function () {
     recipeView.render(model.state.recipe);
   } catch (err) {
     recipeView.renderError();
-    console.error(err);
   }
 };
 
@@ -46,7 +41,7 @@ const controlSearchResults = async function () {
 
     // 1) Get search query
     const query = searchView.getQuery();
-    // console.log(!query);
+
     if (!query) {
       throw new Error();
     }
@@ -55,13 +50,11 @@ const controlSearchResults = async function () {
     await model.loadSearchResults(query);
 
     // 3) Render results
-    // resultsView.render(model.state.search.results);
     resultsView.render(model.getSearchResultsPage());
 
     // 4) Render initial pagination buttons
     paginationView.render(model.state.search);
   } catch (err) {
-    // console.log(err);
     resultsView.renderError();
   }
 };
@@ -125,7 +118,6 @@ const controlAddRecipe = async function (newRecipe) {
       addRecipeView.toggleWindow();
     }, MODAL_CLOSE_SEC * 1000);
   } catch (err) {
-    console.error('💥', err);
     addRecipeView.renderError(err.message);
   }
 };
@@ -139,6 +131,5 @@ const init = function () {
   searchView.addHandlerSearch(controlSearchResults);
   paginationView.addHamdlerClick(controlPagination);
   addRecipeView.addHandlerUpload(controlAddRecipe);
-  console.log('Welcome');
 };
 init();
