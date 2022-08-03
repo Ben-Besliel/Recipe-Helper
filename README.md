@@ -1,3 +1,3 @@
-# forkify Project
+# Recipe Helper 
 
 Recipe application with custom recipe uploads
